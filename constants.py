@@ -1,5 +1,3 @@
-LEADS_GUI_API = "http://<ec2 ip>/<endpoint>"
-
 SQL_CONFIG = {
     'user': 'root',
     'password': 'password',
