@@ -8,7 +8,15 @@ from data_client import DataClient
 
 load_dotenv()
 app = Flask(__name__)
-dc = DataClient()
+_dc = None
+
+
+def get_dc() -> DataClient:
+    global _dc
+    if _dc is None:
+        _dc = DataClient()
+    return _dc
+
 
 def send_sms(body, to):
     account_sid = os.getenv('TWILIO_ACCOUNT_SID')
@@ -17,15 +25,17 @@ def send_sms(body, to):
 
     message = client.messages.create(
         body=body,
-        from_= os.getenv('TWILIO_PHONE_NUMBER'),
+        from_=os.getenv('TWILIO_PHONE_NUMBER'),
         to=to
     )
 
     return message.sid
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route('/user_submit', methods=['POST'])
 def handle_info():
@@ -36,13 +46,14 @@ def handle_info():
     print(request.headers)
     print(info)
 
-    dc.save_user_info(info)
+    get_dc().save_user_info(info)
 
     return jsonify({'status': 'recieved'})
 
+
 @app.route('/track', methods=['POST'])
-def track(): 
-    
+def track():
+
     # Print request DEBUG
     print("Headers:", request.headers)
     print("Data:", request.data)  # raw bytes
@@ -57,6 +68,7 @@ def track():
 
     print(f"Event: {event}")
     return jsonify({'status': 'received'})
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

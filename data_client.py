@@ -3,6 +3,7 @@ from utils.logging import path_log
 
 from constants import SQL_CONFIG
 
+
 class DataClient:
 
     def __init__(self):
@@ -23,7 +24,7 @@ class DataClient:
     def save_user_info(self, user_info):
 
         print(f"User Info: {user_info}")
-        
+
         values = [
             user_info['email'],
             user_info['first_name'],
@@ -32,9 +33,9 @@ class DataClient:
             user_info['zipcode'],
             user_info['state']
         ]
-        
+
         self.sql.run(f"""
-            
+
             -- Initialize and use database
             CREATE DATABASE IF NOT EXISTS {self.db_name};
             USE {self.db_name};
