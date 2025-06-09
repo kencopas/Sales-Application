@@ -1,10 +1,27 @@
+import os
+
 from flask import Flask, request, render_template, jsonify
+from twilio.rest import Client
+from dotenv import load_dotenv
 
 from data_client import DataClient
-from constants import LEADS_GUI_API
 
+load_dotenv()
 app = Flask(__name__)
 dc = DataClient()
+
+def send_sms(body, to):
+    account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        body=body,
+        from_= os.getenv('TWILIO_PHONE_NUMBER'),
+        to=to
+    )
+
+    return message.sid
 
 @app.route("/")
 def home():

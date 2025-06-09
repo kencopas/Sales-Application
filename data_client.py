@@ -34,8 +34,24 @@ class DataClient:
         ]
         
         self.sql.run(f"""
+            
+            -- Initialize and use database
+            CREATE DATABASE IF NOT EXISTS {self.db_name};
             USE {self.db_name};
+
+            -- Initialize table if it doesn't already exist
+            CREATE TABLE IF NOT EXISTS user_info (
+                email VARCHAR(50) PRIMARY KEY,
+                first_name VARCHAR(30) NOT NULL,
+                last_name VARCHAR(30) NOT NULL,
+                phone_number CHAR(10) NOT NULL,
+                zipcode CHAR(5) NOT NULL,
+                state CHAR(2) NOT NULL
+            );
+
+            -- Insert user info into table as record
             INSERT INTO user_info VALUES ('{"', '".join(values)}')
+
         """)
 
         self.sql.commit()
