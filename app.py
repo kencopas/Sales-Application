@@ -4,6 +4,7 @@ from flask import Flask, request, render_template, jsonify
 from twilio.rest import Client
 from dotenv import load_dotenv
 
+from utils.logging import path_log, debug
 from data_client import DataClient
 
 load_dotenv()
@@ -11,6 +12,7 @@ app = Flask(__name__)
 _dc = None
 
 
+@debug
 def get_dc() -> DataClient:
     global _dc
     if _dc is None:
@@ -18,6 +20,7 @@ def get_dc() -> DataClient:
     return _dc
 
 
+@debug
 def send_sms(body, to):
     account_sid = os.getenv('TWILIO_ACCOUNT_SID')
     auth_token = os.getenv('TWILIO_AUTH_TOKEN')
@@ -33,10 +36,12 @@ def send_sms(body, to):
 
 
 @app.route("/")
+@debug
 def home():
     return render_template("index.html")
 
 
+@debug
 @app.route('/user_submit', methods=['POST'])
 def handle_info():
 
@@ -51,6 +56,7 @@ def handle_info():
     return jsonify({'status': 'recieved'})
 
 
+@debug
 @app.route('/track', methods=['POST'])
 def track():
 

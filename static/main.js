@@ -23,6 +23,7 @@ window.addEventListener('beforeunload', () => {
 
 // Track every click on the page
 function trackClicks() {
+    console.log('trackClicks()')
     document.addEventListener('click', (e) => {
         sendUserEvent('click', {
             element: e.target.tagName,
@@ -35,6 +36,11 @@ function trackClicks() {
 
 // Send analytics events
 function sendUserEvent(type, payload) {
+    console.log(
+        'sendUserEvent(\n',
+        '    type='+type+'\n',
+        '    payload='+payload+'\n'
+    )
     fetch('/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -44,6 +50,7 @@ function sendUserEvent(type, payload) {
 
 // Send user form data
 function sendUserInfo() {
+    console.log('sendUserInfo()')
     const result = {};
     const elementIds = ['first_name', 'last_name', 'email', 'phone_number', 'state', 'zipcode'];
 

@@ -26,3 +26,11 @@ def path_log(message: str, err: Exception = None) -> None:
     print(f"{method_name} | {message}")
     if err:
         print(f"{type(err).__name__}: {err}")
+
+
+def debug(func):
+    def wrapper(*args, **kwargs):
+        read_kwargs = [f"{key}={val}" for key, val in kwargs.items()]
+        print(f"\n{func.__name__}({', '.join([str(a) for a in args])}, {', '.join(read_kwargs)})\n")
+        return func(*args, **kwargs)
+    return wrapper

@@ -1,11 +1,12 @@
 from utils.sql import SafeSQL
-from utils.logging import path_log
+from utils.logging import path_log, debug
 
 from constants import SQL_CONFIG
 
 
 class DataClient:
 
+    @debug
     def __init__(self):
 
         try:
@@ -21,6 +22,7 @@ class DataClient:
         except Exception as err:
             path_log('MySQL Connection Failed', err)
 
+    @debug
     def save_user_info(self, user_info):
 
         print(f"User Info: {user_info}")
