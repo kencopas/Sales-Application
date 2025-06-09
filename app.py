@@ -61,9 +61,9 @@ def handle_info():
 def track():
 
     # Print request DEBUG
-    print("Headers:", request.headers)
-    print("Data:", request.data)  # raw bytes
-    print("Is JSON?", request.is_json)
+    # print("Headers:", request.headers)
+    # print("Data:", request.data)  # raw bytes
+    # print("Is JSON?", request.is_json)
 
     # Get user id and event
     event = request.get_json(silent=True)
