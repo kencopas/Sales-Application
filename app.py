@@ -3,6 +3,8 @@ import os
 from flask import Flask, request, render_template, jsonify
 from twilio.rest import Client
 from dotenv import load_dotenv
+import smtplib
+from email.mime.text import MIMEText
 
 from utils.logging import path_log, debug
 from data_client import DataClient
@@ -21,7 +23,7 @@ def get_dc() -> DataClient:
 
 
 @debug
-def send_sms(body, to):
+def send_twilio(body, to):
     account_sid = os.getenv('TWILIO_ACCOUNT_SID')
     auth_token = os.getenv('TWILIO_AUTH_TOKEN')
     client = Client(account_sid, auth_token)
@@ -35,9 +37,38 @@ def send_sms(body, to):
     return message.sid
 
 
+@debug
+def send_sms(phone_number, message):
+
+    gmail_user = os.getenv('SMTP_GMAIL')
+    app_pass = os.getenv('SMTP_APP_PASS')
+    to_number = f"{phone_number}@tmomail.net"
+
+    if not gmail_user or not app_pass:
+        print('environment variables unset')
+        print(gmail_user, app_pass)
+        return
+
+    msg = MIMEText(str(message))
+    msg['From'] = gmail_user
+    msg['To'] = to_number
+    msg['Subject'] = ' '
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(gmail_user, app_pass)
+        server.sendmail(gmail_user, to_number, msg.as_string())
+        server.quit()
+        print("SMS sent successfully!")
+    except Exception as e:
+        print("Failed to send SMS:", e)
+
+
 @app.route("/")
 @debug
 def home():
+    # send_sms('7402722433', 'Hello, welcome to my website!')
     return render_template("index.html")
 
 
