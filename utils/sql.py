@@ -145,15 +145,9 @@ class SafeSQL:
     # Safe commit function
     def commit(self) -> None:
 
-        # If there are one or more errors, prompt the user before committing
+        # If there are one or more errors, print
         if self.error_count > 0:
-            ans = input(
-                f"{self.error_count} errors occured during query."
-                "Would you still like to commit?  Y | N \n"
-            )
-            if ans.lower() != "y":
-                print("Commit aborted.")
-                return
+            print(f"{self.error_count} errors occured during query.")
 
         self.connector.commit()
         print(self.query_count, "queries committed.")
