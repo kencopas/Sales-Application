@@ -94,6 +94,7 @@ nav a:hover {
 
 /* Bottom Section */
 .section-image {
+  width: 100%;
   text-align: center;
   padding: 2rem;
 }
