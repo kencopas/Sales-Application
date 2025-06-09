@@ -10,6 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 dc = DataClient()
 
+
 def send_sms(body, to):
     account_sid = os.getenv('TWILIO_ACCOUNT_SID')
     auth_token = os.getenv('TWILIO_AUTH_TOKEN')
