@@ -4,13 +4,13 @@ let timeOnPageStart = Date.now();
 
 // Wait for DOM to load before accessing elements
 document.addEventListener('DOMContentLoaded', () => {
-    const quoteBtn = document.getElementById('quoteBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const hideBtn = document.getElementById('hideBtn');
+    // const quoteBtn = document.getElementById('quoteBtn');
+    // const submitBtn = document.getElementById('submitBtn');
+    // const hideBtn = document.getElementById('hideBtn');
 
-    quoteBtn.addEventListener('click', () => showModal('formModal'));
-    submitBtn.addEventListener('click', sendUserInfo);
-    hideBtn.addEventListener('click', () => hideModal('formModal'))
+    // quoteBtn.addEventListener('click', () => showModal('formModal'));
+    // submitBtn.addEventListener('click', sendUserInfo);
+    // hideBtn.addEventListener('click', () => hideModal('formModal'))
 
     trackClicks();
 });
@@ -38,8 +38,8 @@ function trackClicks() {
 function sendUserEvent(type, payload) {
     console.log(
         'sendUserEvent(\n',
-        '    type='+type+'\n',
-        '    payload='+payload+'\n'
+        '    type=' + type + '\n',
+        '    payload=' + payload + '\n'
     )
     fetch('/track', {
         method: 'POST',

@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -22,8 +23,9 @@
 
     <section class="hero">
       <div class="hero-text">
-        <h1>YOUR<br />INSURANCE,<br />YOUR WAY</h1>
-        <p>
+        <font style="line-height: 75px; font-family: 'Playfiar Display'; font-size: 70px">YOUR<br />INSURANCE,<br />YOUR WAY</font>
+        <p style="line-height: 23px">
+          <br />
           Welcome to BKhealthcare, where we are dedicated to providing you with
           comprehensive and personalized insurance services. Our goal is to
           assist you in selecting the most suitable insurance plans that meet
@@ -34,6 +36,7 @@
       <div class="hero-image">
         <img
           src="{{ url_for('static', filename='images/coffee_laptop.jpg') }}"
+          style="width: 700px"
           alt="Phone and Coffee"
         />
       </div>
@@ -41,11 +44,108 @@
 
     <hr class="divider" />
 
-    <section class="section-image">
-      <img
-        src="{{ url_for('static', filename='images/laptop_work.jpg') }}"
-        alt="Latop thing pictureioer"
-      />
+        <section class="services">
+      <h2>Our Services</h2>
+      <div class="service-cards">
+        <div class="card">
+          <h3>Health Insurance</h3>
+          <p>Customized health plans tailored for individuals and families.</p>
+        </div>
+        <div class="card">
+          <h3>Life Insurance</h3>
+          <p>Protect your loved ones with flexible and reliable coverage options.</p>
+        </div>
+        <div class="card">
+          <h3>Dental & Vision</h3>
+          <p>Affordable coverage to keep your smile and vision strong and healthy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonial">
+      <h2>What Our Clients Say</h2>
+      <blockquote>
+        “BKhealthcare helped me find the perfect plan with no hassle. Their team was incredibly kind, professional, and quick to respond.”
+        <footer>— Amanda R., Tampa, FL</footer>
+      </blockquote>
+    </section>
+
+    <section class="quote-section" id="quote">
+      <h2>Get a Quote</h2>
+      <form id="quoteForm" method="POST" action="{{ url_for('quote_submit') }}" method="POST">
+        <div class="form-group">
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            required
+            pattern="[A-Za-z\s\-]+"
+            placeholder="First Name"
+          />
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            required
+            pattern="[A-Za-z\s\-]+"
+            placeholder="Last Name"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="Email"
+          />
+          <input
+            type="tel"
+            id="phone_number"
+            name="phone_number"
+            required
+            pattern="\d{10}"
+            placeholder="Phone Number (10 digits)"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="zipcode"
+            name="zipcode"
+            required
+            pattern="\d{5}"
+            placeholder="ZIP Code"
+          />
+          <input
+            type="text"
+            id="state"
+            name="state"
+            required
+            maxlength="2"
+            placeholder="State (e.g., FL)"
+          />
+        </div>
+
+        <button type="submit" id="submitBtn">Submit</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 BKhealthcare. All rights reserved.</p>
+    </footer>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='main.js') }}"
+    ></script>
+  </body>
+</html>
+
+
+    <!-- <section class="hero">
+      <p> test </p>
     </section>
 
     <br /><br />
@@ -99,4 +199,4 @@
       src="{{ url_for('static', filename='main.js') }}"
     ></script>
   </body>
-</html>
+</html> -->

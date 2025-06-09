@@ -72,6 +72,11 @@ def home():
     return render_template("index.html")
 
 
+@app.route("/quote_submit", methods=['POST'])
+def quote_submit():
+    return render_template("quote-submitted.html")
+
+
 @debug
 @app.route('/user_submit', methods=['POST'])
 def handle_info():
