@@ -23,6 +23,12 @@ window.addEventListener('beforeunload', () => {
     sendUserEvent('time_spent', { milliseconds: timeSpent });
 });
 
+function accessUser(row) {
+    const cells = row.querySelectorAll("td")
+    const values = Array.from(cells).map(cell => cell.textContent.trim());
+    console.log("Email of Clicked User: ", values[0])
+}
+
 // Track every click on the page
 function trackClicks() {
     console.log('trackClicks()')

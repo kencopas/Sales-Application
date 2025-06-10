@@ -24,6 +24,16 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/update-user', methods=['POST'])
+def update_user():
+    data = request.get_json()
+    user_email = data.get('email')
+
+    output = get_dc().sql.run_file('sql/access.sql', params=(user_email,))
+
+    return jsonify({'status': 'success', 'sql_response': output})
+
+
 @app.route('/book')
 def get_started():
     calendly_url = gotenv('CALENDLY_URL')
@@ -61,7 +71,7 @@ def private_endpoint():
     # Retrieve the DataClient, select the database, and select all rows
     dc = get_dc()
     dc.sql.run(f'USE {database};')
-    output = dc.sql.run(f'SELECT * FROM {table} ORDER BY timestamp DESC;')
+    output = dc.sql.run(f'SELECT * FROM {table} ORDER BY timestamp DESC LIMIT 50;')
 
     # If the table is not empty, pass data to view-database.html template
     if output:
@@ -130,6 +140,7 @@ def send_sms(phone_number, message):
 # Render index.html at the root url
 @debug
 @app.route("/")
+@app.route("/home")
 def home():
     # Retrieve all specified environment variables and pass to index.html
     index_kwargs = {key: gotenv(key.upper()) for key in INDEX_VARS}

@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <title>Leads</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <script>
+    function accessUser(row) {
+      const cells = row.querySelectorAll("td")
+      const values = Array.from(cells).map(cell => cell.textContent.trim());
+      const user_email = values[0]
+      fetch('/update-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: user_email})
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Server response: ', data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
   <style>
     body {
       background-color: #121212;
@@ -37,12 +58,13 @@
       color: #ffffff;
     }
 
-    tr:nth-child(even) {
-      background-color: #1a1a1a;
+    tr.default {
+      background-color: #181818;
     }
 
-    tr:nth-child(odd) {
-      background-color: #181818;
+    tr.new {
+      background-color: #043466b6;
+      color: #add8e6;
     }
 
     td {
@@ -62,7 +84,7 @@
     </thead>
     <tbody>
       {% for row in rows %}
-        <tr>
+        <tr class="{% if row[6] == 'N' %}new{% else %}default{% endif %}" onclick="accessUser(this)">
           {% for cell in row %}
             <td>{{ cell }}</td>
           {% endfor %}
