@@ -5,3 +5,5 @@ secrets
 .env
 dev
 test_main.py
+test.py
+secret.txt

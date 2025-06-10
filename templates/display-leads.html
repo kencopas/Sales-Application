@@ -2,29 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Query Results</title>
+  <title>Leads</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      color: #ffffff;
+    }
+
     table {
-      width: 80%;
+      width: 90%;
       margin: 40px auto;
       border-collapse: collapse;
-      font-family: 'Playfair Display', serif;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
     }
+
     th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
+      border: 1px solid #333;
+      padding: 12px 16px;
       text-align: left;
     }
+
     th {
-      background-color: #f2f2f2;
+      background-color: #1e1e1e;
+      color: #ffffff;
     }
+
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #1a1a1a;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #181818;
+    }
+
+    td {
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center;">User Data</h1>
+  <h1>Quote Requests</h1>
   <table>
     <thead>
       <tr>

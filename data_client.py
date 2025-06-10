@@ -23,7 +23,7 @@ class DataClient:
             print("MySQL Connection Successful.")
 
             self.sql.run('SELECT * FROM user_info limit 1;')
-            self.columns = self.sql.cursor.column_names
+            self.columns = self.sql.cursor.column_names[:-2]
 
         except Exception as err:
             path_log('MySQL Connection Failed', err)
@@ -34,7 +34,7 @@ class DataClient:
         Handles a submission by inserting user info into the database
         """
         print(f"User Info: {user_info}")
-        values = tuple([user_info[col] for col in self.columns])
+        values = tuple([user_info[col] for col in self.columns]+['N'])
         print(values)
 
         self.sql.run_file('sql/append.sql', params=values)

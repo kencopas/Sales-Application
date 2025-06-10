@@ -28,14 +28,14 @@ def init():
         sql.run('sql/init.sql')
 
         # Retrieve the number of columns
-        col_count = len(sql.cursor.column_names)
+        col_count = len(sql.cursor.column_names)-1
 
         # Format the script for append.sql
         append_script = f"""
             INSERT INTO
                 {table}
             VALUES
-                ({', '.join([r'%s' for _ in range(col_count)])});
+                ({', '.join([r'%s' for _ in range(col_count)])}, NOW());
         """
 
         # Write the script to a file

@@ -78,9 +78,12 @@ nav a:hover {
 }
 
 .hero-image img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 800px;
+  /* allows it to grow */
   height: auto;
   border-radius: 12px;
+  object-fit: cover;
 }
 
 .hero-text font {

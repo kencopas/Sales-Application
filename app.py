@@ -3,6 +3,10 @@ from twilio.rest import Client
 from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
+import hmac
+import hashlib
+import base64
+import time
 
 from utils.logging import gotenv, debug
 from data_client import DataClient
@@ -39,18 +43,29 @@ def private_endpoint():
     # Retrieve the token from the url
     token = request.args.get("token")
 
-    # Check if the token matches the private api token env variable
-    if token != private_token:
+    # Validate the encrypted token
+    try:
+        decoded = base64.urlsafe_b64decode(token).decode()
+        user_id, exp_str, signature = decoded.rsplit(":", 2)
+        expected_sig = hmac.new(private_token.encode(), f"{user_id}:{exp_str}".encode(), hashlib.sha256).hexdigest()
+        
+        if not hmac.compare_digest(signature, expected_sig):
+            abort(403)  # tampered
+
+        if int(exp_str) < int(time.time()):
+            abort(403)  # expired
+
+    except Exception:
         abort(403)
 
     # Retrieve the DataClient, select the database, and select all rows
     dc = get_dc()
     dc.sql.run(f'USE {database};')
-    output = dc.sql.run(f'SELECT * FROM {table};')
+    output = dc.sql.run(f'SELECT * FROM {table} ORDER BY timestamp DESC;')
 
     # If the table is not empty, pass data to view-database.html template
     if output:
-        columns = output[0]
+        columns = [col.replace('_', ' ').title() for col in output[0]]
         rows = output[1:]
         return render_template(
             "display-leads.html",
