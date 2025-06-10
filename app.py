@@ -1,38 +1,53 @@
-import os
-
 from flask import Flask, request, render_template, jsonify, abort
 from twilio.rest import Client
 from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
 
-from utils.logging import path_log, debug
+from utils.logging import gotenv, debug
 from data_client import DataClient
+from constants import INDEX_VARS
+import setup
 
 load_dotenv()
+setup.init()
 app = Flask(__name__)
 _dc = None
 
 
-@app.route("/lead-list")
+@app.route("/view-database")
 def private_endpoint():
+    """
+    View the database information
+    """
+    # Retrieve the environment variables
+    private_token = gotenv('PRIVATE_API_TOKEN')
+    database = gotenv('MYSQL_DATABASE')
+    table = gotenv('MYSQL_TABLE')
+
+    # Retrieve the token from the url
     token = request.args.get("token")
-    if token != os.getenv('PRIVATE_API_TOKEN'):
+
+    # Check if the token matches the private api token env variable
+    if token != private_token:
         abort(403)
+
+    # Retrieve the DataClient, select the database, and select all rows
     dc = get_dc()
-    dc.sql.run('USE usha_database;')
-    output = dc.sql.run('SELECT * FROM user_info;')
+    dc.sql.run(f'USE {database};')
+    output = dc.sql.run(f'SELECT * FROM {table};')
+
+    # If the table is not empty, pass data to view-database.html template
     if output:
         columns = output[0]
         rows = output[1:]
-        return render_template("display-leads.html", rows=rows, columns=columns)
+        return render_template(
+            "display-leads.html",
+            rows=rows,
+            columns=columns
+        )
     else:
-        return "brent gei"
-
-@app.route("/book", methods=['POST', 'GET', 'OPTIONS'])
-def book():
-    print('book()')
-    return render_template("book.html")
+        return f"Empty table {table}"
 
 
 @debug
@@ -45,13 +60,13 @@ def get_dc() -> DataClient:
 
 @debug
 def send_twilio(body, to):
-    account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    account_sid = gotenv('TWILIO_ACCOUNT_SID')
+    auth_token = gotenv('TWILIO_AUTH_TOKEN')
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
         body=body,
-        from_=os.getenv('TWILIO_PHONE_NUMBER'),
+        from_=gotenv('TWILIO_PHONE_NUMBER'),
         to=to
     )
 
@@ -61,8 +76,8 @@ def send_twilio(body, to):
 @debug
 def send_sms(phone_number, message):
 
-    gmail_user = os.getenv('SMTP_GMAIL')
-    app_pass = os.getenv('SMTP_APP_PASS')
+    gmail_user = gotenv('SMTP_GMAIL')
+    app_pass = gotenv('SMTP_APP_PASS')
     to_number = f"{phone_number}@tmomail.net"
 
     if not gmail_user or not app_pass:
@@ -86,31 +101,32 @@ def send_sms(phone_number, message):
         print("Failed to send SMS:", e)
 
 
-@app.route("/")
+# Render index.html at the root url
 @debug
+@app.route("/")
 def home():
-    # send_sms('7402722433', 'Hello, welcome to my website!')
-    return render_template("index.html")
+    # Retrieve all specified environment variables and pass to index.html
+    index_kwargs = {key: gotenv(key.upper()) for key in INDEX_VARS}
+    return render_template("index.html", **index_kwargs)
 
 
 @app.route("/quote_submit", methods=['POST'])
 def quote_submit():
+    """
+    Quote Submission Endpoint
+
+    Takes information optionally, passes to DataClient, renders a template
+    """
+
+    if request.form:
+
+        info = request.form.to_dict()
+
+        # Print and save the user info
+        print(info)
+        get_dc().handle_submit(info)
+
     return render_template("quote-submitted.html")
-
-
-@debug
-@app.route('/user_submit', methods=['POST'])
-def handle_info():
-
-    info = request.get_json()
-
-    # Print the user info
-    print(request.headers)
-    print(info)
-
-    get_dc().save_user_info(info)
-
-    return jsonify({'status': 'recieved'})
 
 
 @debug

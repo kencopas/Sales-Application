@@ -69,6 +69,17 @@ class SafeSQL:
 
         # Return unpacked data
         return data
+    
+    # Executes a file given a filepath
+    def run_file(self, fp: str, *, params: tuple = None, inserts: tuple = None):
+        with open(fp, 'r') as f:
+            script = f.read()
+        if inserts:
+            script = script.format(*inserts)
+        if params:
+            return self.cursor.execute(script, params)
+        else:
+            return self.run(script)
 
     # Writes a MySQL table to a csv file
     def to_csv(self, table: str, filepath: str) -> None:

@@ -1,7 +1,5 @@
 from utils.sql import SafeSQL
-from utils.logging import path_log, debug
-
-from constants import SQL_CONFIG
+from utils.logging import path_log, debug, gotenv
 
 
 class DataClient:
@@ -11,50 +9,34 @@ class DataClient:
 
         try:
 
-            # Pop the database name from the config map
-            self.db_name = SQL_CONFIG.pop('database')
+            # Get the sql config from the environment variables
+            sql_config = {
+                'user': gotenv('MYSQL_USER'),
+                'password': gotenv('MYSQL_PASSWORD'),
+                'host': gotenv('MYSQL_HOST'),
+                'database': gotenv('MYSQL_DATABASE')
+            }
 
             # Establish a SafeSQL connection
-            self.sql = SafeSQL(**SQL_CONFIG, verbose=True)
+            self.sql = SafeSQL(**sql_config, verbose=True)
 
             print("MySQL Connection Successful.")
+
+            self.sql.run('SELECT * FROM user_info limit 1;')
+            self.columns = self.sql.cursor.column_names
 
         except Exception as err:
             path_log('MySQL Connection Failed', err)
 
     @debug
-    def save_user_info(self, user_info):
-
+    def handle_submit(self, user_info: dict):
+        """
+        Handles a submission by inserting user info into the database
+        """
         print(f"User Info: {user_info}")
+        values = tuple([user_info[col] for col in self.columns])
+        print(values)
 
-        values = [
-            user_info['email'],
-            user_info['first_name'],
-            user_info['last_name'],
-            user_info['phone_number'],
-            user_info['zipcode'],
-            user_info['state']
-        ]
-
-        self.sql.run(f"""
-
-            -- Initialize and use database
-            CREATE DATABASE IF NOT EXISTS {self.db_name};
-            USE {self.db_name};
-
-            -- Initialize table if it doesn't already exist
-            CREATE TABLE IF NOT EXISTS user_info (
-                email VARCHAR(50) PRIMARY KEY,
-                first_name VARCHAR(30) NOT NULL,
-                last_name VARCHAR(30) NOT NULL,
-                phone_number CHAR(10) NOT NULL,
-                zipcode CHAR(5) NOT NULL,
-                state CHAR(2) NOT NULL
-            );
-
-            -- Insert user info into table as record
-            INSERT INTO user_info VALUES ('{"', '".join(values)}')
-
-        """)
+        self.sql.run_file('sql/append.sql', params=values)
 
         self.sql.commit()

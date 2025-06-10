@@ -1,4 +1,13 @@
 import inspect
+import os
+
+
+# Retrieves an environment variable, logs if it doesn't exist
+def gotenv(varname: str):
+    envvar = os.getenv(varname)
+    if not envvar:
+        print(f"Missing required environment variable: {varname}")
+    return envvar
 
 
 def path_log(message: str, err: Exception = None) -> None:

@@ -1,6 +1,2 @@
-SQL_CONFIG = {
-    'user': 'root',
-    'password': 'password',
-    'host': '127.0.0.1',
-    'database': 'usha_database'
-}
+# Environment variable names passed to the index.html upon rendering
+INDEX_VARS = ['calendly_url']
