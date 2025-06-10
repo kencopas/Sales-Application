@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, abort
 from twilio.rest import Client
 from dotenv import load_dotenv
 import smtplib
@@ -12,6 +12,27 @@ from data_client import DataClient
 load_dotenv()
 app = Flask(__name__)
 _dc = None
+
+
+@app.route("/lead-list")
+def private_endpoint():
+    token = request.args.get("token")
+    if token != os.getenv('PRIVATE_API_TOKEN'):
+        abort(403)
+    dc = get_dc()
+    dc.sql.run('USE usha_database;')
+    output = dc.sql.run('SELECT * FROM user_info;')
+    if output:
+        columns = output[0]
+        rows = output[1:]
+        return render_template("display-leads.html", rows=rows, columns=columns)
+    else:
+        return "brent gei"
+
+@app.route("/book", methods=['POST', 'GET', 'OPTIONS'])
+def book():
+    print('book()')
+    return render_template("book.html")
 
 
 @debug

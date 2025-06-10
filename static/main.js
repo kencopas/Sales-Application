@@ -5,11 +5,13 @@ let timeOnPageStart = Date.now();
 // Wait for DOM to load before accessing elements
 document.addEventListener('DOMContentLoaded', () => {
     // const quoteBtn = document.getElementById('quoteBtn');
-    // const submitBtn = document.getElementById('submitBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const calendlyBtn = document.getElementById('calendlyBtn');
     // const hideBtn = document.getElementById('hideBtn');
 
     // quoteBtn.addEventListener('click', () => showModal('formModal'));
-    // submitBtn.addEventListener('click', sendUserInfo);
+    submitBtn.addEventListener('click', sendUserInfo);
+    calendlyBtn.addEventListener('click', calendlyRedirect);
     // hideBtn.addEventListener('click', () => hideModal('formModal'))
 
     trackClicks();
@@ -64,4 +66,9 @@ function sendUserInfo() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(result)
     }).catch(err => console.error('Form submission failed:', err));
+}
+
+function calendlyRedirect() {
+    console.log('calendlyRedirect()')
+    window.location.href = "/book";
 }

@@ -9,6 +9,7 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   </head>
   <body>
     <header>
@@ -23,7 +24,7 @@
 
     <section class="hero">
       <div class="hero-text">
-        <font style="line-height: 75px; font-family: 'Playfiar Display'; font-size: 70px">YOUR<br />INSURANCE,<br />YOUR WAY</font>
+        <font style="line-height: 75px; font-family: 'Playfair Display'; font-size: 70px">YOUR<br />INSURANCE,<br />YOUR WAY</font>
         <p style="line-height: 23px">
           <br />
           Welcome to BKhealthcare, where we are dedicated to providing you with
@@ -68,6 +69,20 @@
         “BKhealthcare helped me find the perfect plan with no hassle. Their team was incredibly kind, professional, and quick to respond.”
         <footer>— Amanda R., Tampa, FL</footer>
       </blockquote>
+    </section>
+
+    <section class="consultation-section">
+      <div class="container">
+        <h2>📅 Schedule a Free Consultation</h2>
+        <p>Pick a time that works best for you using the calendar below.</p>
+
+        <!-- Calendly Inline Embed -->
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/insurancebrent-29-6"
+          style="min-width:320px; height:630px;">
+        </div>
+      </div>
     </section>
 
     <section class="quote-section" id="quote">
@@ -129,7 +144,7 @@
           />
         </div>
 
-        <button type="submit" id="submitBtn">Submit</button>
+        <button type="submit" id="submitBtn" onclick="sendUserInfo">Submit</button>
       </form>
     </section>
 
