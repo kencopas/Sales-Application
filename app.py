@@ -15,6 +15,17 @@ app = Flask(__name__)
 _dc = None
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/book')
+def get_started():
+    calendly_url = gotenv('CALENDLY_URL')
+    return render_template('book.html', calendly_url=calendly_url)
+
+
 @app.route("/view-database")
 def private_endpoint():
     """

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | BKhealthcare</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">BKhealthcare</div>
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('home') }}#quote-section">Get a Quote</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(36px, 8vw, 60px); line-height: 1.2; font-weight: 700;">
+          About BKhealthcare
+        </h1>
+        <p>
+          BKhealthcare was founded with a single goal: to empower individuals and families to make informed insurance choices. We provide expert guidance, personalized plan selection, and a human-centered approach to health, dental, and vision coverage.
+        </p>
+        <p>
+          Our experienced agents are committed to clarity, compassion, and connection. Whether you're looking for a single policy or a comprehensive plan, we're here to make the process stress-free and successful.
+        </p>
+        <a id="getStarted" href="{{ url_for('home') }}#quote-section">Get a Free Quote</a>
+      </div>
+      <div class="hero-image">
+        <img
+          src="{{ url_for('static', filename='images/about_team.jpg') }}"
+          alt="BKhealthcare Team"
+        />
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 BKhealthcare. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

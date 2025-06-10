@@ -1,9 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Playfair Display', serif;
-  background-color: #fdfdfd;
-  color: #222;
+  background-color: #121212;
+  color: #e0e0e0;
   line-height: 1.6;
 }
 
@@ -16,16 +20,17 @@ h1,
 h2,
 h3 {
   margin: 0 0 20px;
+  color: #ffffff;
 }
 
 /* Header */
 header {
-  background-color: #ffffff;
+  background-color: #1e1e1e;
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -34,18 +39,18 @@ header {
 .logo {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 }
 
 nav a {
   margin: 0 15px;
   font-size: 16px;
   font-weight: 500;
-  color: #333;
+  color: #e0e0e0;
 }
 
 nav a:hover {
-  color: #0056b3;
+  color: #4ea1ff;
 }
 
 /* Hero Section */
@@ -54,39 +59,22 @@ nav a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 80px 40px;
-  background-color: #f5f5f5;
-  flex-wrap: wrap;
+  background-color: #1a1a1a;
+  flex-wrap: nowrap;
+  /* Ensure side-by-side layout on desktop */
+  gap: 40px;
 }
 
 .hero-text {
-  max-width: 600px;
+  flex: 1;
+  min-width: 0;
+  max-width: none;
 }
 
-.hero-text font {
-  display: block;
-  font-weight: 700;
-  color: #111;
-}
-
-.hero-text p {
-  font-size: 16px;
-  margin-top: 20px;
-  color: #444;
-}
-
-.hero-text button {
-  margin-top: 20px;
-  padding: 14px 28px;
-  font-size: 16px;
-  background-color: #222;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.hero-text button:hover {
-  background-color: #444;
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .hero-image img {
@@ -95,12 +83,39 @@ nav a:hover {
   border-radius: 12px;
 }
 
+.hero-text font {
+  display: block;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.hero-text p {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #ccc;
+}
+
+.hero-text button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hero-text button:hover {
+  background-color: #555;
+}
+
 /* Divider */
 .divider {
   margin: 60px auto;
   border: none;
   height: 1px;
-  background-color: #ccc;
+  background-color: #333;
   width: 80%;
 }
 
@@ -108,11 +123,13 @@ nav a:hover {
 .services {
   padding: 80px 40px;
   text-align: center;
+  background-color: #181818;
 }
 
 .services h2 {
   font-size: 36px;
   margin-bottom: 40px;
+  color: #ffffff;
 }
 
 .service-cards {
@@ -123,38 +140,40 @@ nav a:hover {
 }
 
 .card {
-  background-color: #fff;
+  background-color: #222;
   padding: 30px;
   width: 280px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.04);
   border-radius: 10px;
 }
 
 .card h3 {
   font-size: 20px;
   margin-bottom: 15px;
+  color: #ffffff;
 }
 
 .card p {
   font-size: 15px;
-  color: #555;
+  color: #bbb;
 }
 
 /* Testimonial Section */
 .testimonial {
   padding: 80px 40px;
   text-align: center;
-  background-color: #f7f7f7;
+  background-color: #1f1f1f;
 }
 
 .testimonial h2 {
   font-size: 32px;
   margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .testimonial blockquote {
   font-style: italic;
-  color: #333;
+  color: #ccc;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -162,19 +181,20 @@ nav a:hover {
 .testimonial footer {
   margin-top: 20px;
   font-weight: bold;
-  color: #666;
+  color: #888;
 }
 
 /* Quote Form Section */
 .quote-section {
   padding: 80px 40px;
-  background-color: #ffffff;
+  background-color: #181818;
   text-align: center;
 }
 
 .quote-section h2 {
   font-size: 34px;
   margin-bottom: 30px;
+  color: #ffffff;
 }
 
 #quoteForm {
@@ -196,15 +216,16 @@ nav a:hover {
   padding: 14px;
   font-size: 16px;
   width: 300px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   border-radius: 8px;
-  background: #fafafa;
+  background: #2a2a2a;
+  color: #e0e0e0;
 }
 
 #submitBtn {
   padding: 14px;
   font-size: 16px;
-  background: #222;
+  background: #333;
   color: white;
   border: none;
   border-radius: 8px;
@@ -213,18 +234,37 @@ nav a:hover {
 }
 
 #submitBtn:hover {
-  background: #444;
+  background: #555;
+}
+
+#bookConsultation {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 28px;
+  font-size: 16px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  text-align: center;
+}
+
+#bookConsultation:hover {
+  background: #555;
 }
 
 /* Footer */
 footer {
   background-color: #111;
-  color: #eee;
+  color: #bbb;
   padding: 30px 0;
   text-align: center;
   font-size: 14px;
 }
 
+/* Thank You */
 .thank-you {
   padding: 100px 20px;
   text-align: center;
@@ -235,20 +275,20 @@ footer {
 .thank-you h1 {
   font-size: 40px;
   margin-bottom: 20px;
-  color: #222;
+  color: #ffffff;
 }
 
 .thank-you p {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #555;
+  color: #ccc;
 }
 
 .return-home {
   margin-top: 30px;
   padding: 12px 24px;
   font-size: 16px;
-  background-color: #222;
+  background-color: #333;
   color: white;
   border: none;
   border-radius: 6px;
@@ -256,11 +296,12 @@ footer {
 }
 
 .return-home:hover {
-  background-color: #444;
+  background-color: #555;
 }
 
+/* Calendly Button */
 .calendly-button {
-  background-color: #222;
+  background-color: #333;
   color: white;
   font-size: 18px;
   padding: 16px 32px;
@@ -269,38 +310,120 @@ footer {
   cursor: pointer;
   font-family: 'Playfair Display', serif;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .calendly-button:hover {
-  background-color: #444;
+  background-color: #555;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
 }
 
+/* Consultation Section */
 .consultation-section {
   padding: 80px 40px;
-  background-color: #f5f5f5;
+  background-color: #1a1a1a;
   text-align: center;
 }
 
 .consultation-section .container {
   max-width: 900px;
   margin: 0 auto;
-  background: white;
+  background: #222;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
 
 .consultation-section h2 {
   font-size: 32px;
   margin-bottom: 20px;
-  color: #222;
+  color: #ffffff;
 }
 
 .consultation-section p {
   font-size: 18px;
-  color: #555;
+  color: #ccc;
   margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  nav a {
+    margin: 10px 0;
+    font-size: 18px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-text {
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .hero-image img {
+    max-width: 90%;
+  }
+
+  .hero-text button {
+    width: 100%;
+  }
+
+  .form-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #quoteForm input {
+    width: 100%;
+  }
+
+  .service-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .consultation-section .container {
+    padding: 20px;
+  }
+
+  .calendly-button {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .thank-you h1 {
+    font-size: 32px;
+  }
+
+  .thank-you p {
+    font-size: 16px;
+  }
 }

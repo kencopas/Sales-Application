@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book a Consultation</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </head>
+  <body>
+
+    <section class="consultation-section">
+      <div class="container">
+
+        <h2>📅 Schedule a Free Consultation</h2>
+        <p>Pick a time that works best for you using the calendar below.</p>
+
+        <!-- Calendly Inline Embed -->
+        <div
+          class="calendly-inline-widget"
+          data-url="{{ calendly_url }}"
+          style="min-width:320px; height:630px;">
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 BKhealthcare. All rights reserved.</p>
+    </footer>
+
+    <script
+      type="module"
+      src="{{ url_for('static', filename='main.js') }}"
+    ></script>
+  </body>
+</html>
